@@ -33,7 +33,13 @@ class ItemTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: Image.asset(item.imgUrl)),
+                  Expanded(
+                    // faz com que a imagem tenha uma animação de transição
+                    child: Hero(
+                      tag: item.imgUrl,
+                      child: Image.asset(item.imgUrl),
+                    ),
+                  ),
                   Text(
                     item.itemName,
                     style: const TextStyle(
