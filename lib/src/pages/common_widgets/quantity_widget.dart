@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 
 class QuantityWidget extends StatelessWidget {
-  const QuantityWidget({Key? key}) : super(key: key);
+  final String sulffixText;
+  final int value;
+  final Function(int value) result;
+  const QuantityWidget({
+    Key? key,
+    required this.sulffixText,
+    required this.value,
+    required this.result,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,37 +28,42 @@ class QuantityWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            _quantityBotton(
+            _QuantityBotton(
               color: Colors.grey,
               icon: Icons.remove,
-              onPressed: () {},
+              onPressed: () {
+                if (value == 1) return;
+                result(value - 1);
+              },
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 6),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Text(
-                "1kg",
-                style: TextStyle(
+                "$value$sulffixText",
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            _quantityBotton(
+            _QuantityBotton(
               color: CustomColors.customSwatchColor,
               icon: Icons.add,
-              onPressed: () {},
+              onPressed: () {
+                result(value + 1);
+              },
             )
           ],
         ));
   }
 }
 
-class _quantityBotton extends StatelessWidget {
+class _QuantityBotton extends StatelessWidget {
   final Color color;
   final IconData icon;
   final VoidCallback onPressed;
 
-  const _quantityBotton({
+  const _QuantityBotton({
     Key? key,
     required this.color,
     required this.icon,
@@ -62,7 +75,9 @@ class _quantityBotton extends StatelessWidget {
     return Material(
       child: InkWell(
         borderRadius: BorderRadius.circular(50),
-        onTap: () => onPressed,
+        onTap: () {
+          onPressed();
+        },
         child: Ink(
           height: 25,
           width: 25,
