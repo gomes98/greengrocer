@@ -6,7 +6,13 @@ import 'package:greengrocer/src/services/utils_services.dart';
 
 class ItemTile extends StatelessWidget {
   final ItemModel item;
-  ItemTile({Key? key, required this.item}) : super(key: key);
+  final void Function(GlobalKey) cartAnimationMethod;
+  final GlobalKey imageGk = GlobalKey();
+  ItemTile({
+    Key? key,
+    required this.item,
+    required this.cartAnimationMethod,
+  }) : super(key: key);
   final UtilsServices utilsServices = UtilsServices();
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,10 @@ class ItemTile extends StatelessWidget {
                     // faz com que a imagem tenha uma animação de transição
                     child: Hero(
                       tag: item.imgUrl,
-                      child: Image.asset(item.imgUrl),
+                      child: Image.asset(
+                        item.imgUrl,
+                        key: imageGk,
+                      ),
                     ),
                   ),
                   Text(
@@ -72,20 +81,25 @@ class ItemTile extends StatelessWidget {
         Positioned(
           top: 4,
           right: 4,
-          child: Container(
-            height: 40,
-            width: 35,
-            decoration: BoxDecoration(
-              color: CustomColors.customSwatchColor,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                topRight: Radius.circular(20),
+          child: GestureDetector(
+            onTap: () {
+              cartAnimationMethod(imageGk);
+            },
+            child: Container(
+              height: 40,
+              width: 35,
+              decoration: BoxDecoration(
+                color: CustomColors.customSwatchColor,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  topRight: Radius.circular(20),
+                ),
               ),
-            ),
-            child: const Icon(
-              Icons.add_shopping_cart_outlined,
-              color: Colors.white,
-              size: 20,
+              child: const Icon(
+                Icons.add_shopping_cart_outlined,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
         )
