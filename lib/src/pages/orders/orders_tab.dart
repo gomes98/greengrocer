@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:greengrocer/src/config/app_data.dart' as app_data;
+import 'package:greengrocer/src/pages/orders/components/order_tile.dart';
 
 class OrdersTab extends StatelessWidget {
   const OrdersTab({Key? key}) : super(key: key);
@@ -12,9 +14,9 @@ class OrdersTab extends StatelessWidget {
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
         physics: const BouncingScrollPhysics(),
-        itemBuilder: itemBuilder,
+        itemBuilder: (_, index) => OrderTile(order: app_data.orders[index]),
         separatorBuilder: (_, index) => const SizedBox(height: 10),
-        itemCount: itemCount,
+        itemCount: app_data.orders.length,
       ),
     );
   }
