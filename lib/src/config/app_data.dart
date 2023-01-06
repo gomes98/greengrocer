@@ -100,7 +100,7 @@ List<OrderModel> orders = [
     createdOrderTime: DateTime.parse("2022-01-06 10:00:10.458"),
     overdueDateTime: DateTime.parse("2022-01-06 11:03:10.458"),
     items: cartItems,
-    status: "pending_payment",
+    status: "refunded",
     copyAndPaste: "d324rfsdfwrt534",
     total: 43.13,
   ),
