@@ -69,6 +69,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 cartItemQuantity = v;
                               });
                             },
+                            isRemovable: false,
                           ),
                         ],
                       ),
