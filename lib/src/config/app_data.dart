@@ -1,5 +1,6 @@
 import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/models/item_model.dart';
+import 'package:greengrocer/src/models/order_model.dart';
 import 'package:greengrocer/src/models/user_model.dart';
 
 ItemModel apple = ItemModel(
@@ -83,3 +84,15 @@ UserModel user = UserModel(
     phone: "123456789",
     cpf: "12345678910",
     password: "");
+
+List<OrderModel> orders = [
+  OrderModel(
+    id: "dsfgbh",
+    createdOrderTime: DateTime.parse("2022-01-06 10:00:10:458"),
+    overdueDateTime: DateTime.parse("2022-01-06 11:03:10:458"),
+    items: cartItems,
+    status: "pending_payment",
+    copyAndPaste: "d324rfsdfwrt534",
+    total: 43.13,
+  ),
+];
