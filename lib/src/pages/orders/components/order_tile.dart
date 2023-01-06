@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/models/order_model.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
@@ -30,12 +31,76 @@ class OrderTile extends StatelessWidget {
               ),
             ],
           ),
+          childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           children: [
             SizedBox(
-              height: 100,
-            ),
+              height: 150,
+              child: Row(
+                children: [
+                  // items
+                  Expanded(
+                    flex: 3,
+                    child: ListView(
+                      children: order.items.map((e) {
+                        return _OrderItem(
+                          utilsServices: utilsServices,
+                          orderItem: e,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  // status
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: Colors.blue,
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _OrderItem extends StatelessWidget {
+  const _OrderItem(
+      {Key? key, required this.utilsServices, required this.orderItem})
+      : super(key: key);
+
+  final UtilsServices utilsServices;
+  final CartItemModel orderItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Text(
+            '${orderItem.quantity} ${orderItem.item.unit} ',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              orderItem.item.itemName,
+              // style: const TextStyle(
+              //   fontWeight: FontWeight.bold,
+              // ),
+            ),
+          ),
+          Text(
+            utilsServices.priceToCurrency(orderItem.totalPrice()),
+            // style: const TextStyle(
+            //   fontWeight: FontWeight.bold,
+            // ),
+          ),
+        ],
       ),
     );
   }
