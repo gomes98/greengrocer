@@ -27,6 +27,7 @@ class QuantityWidget extends StatelessWidget {
           ],
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             _QuantityBotton(
               color: Colors.grey,
