@@ -17,6 +17,7 @@ class OrderTile extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          initiallyExpanded: order.status != "delivered",
           // titulo da expansion
           title: Column(
             mainAxisSize: MainAxisSize.min,
@@ -34,20 +35,22 @@ class OrderTile extends StatelessWidget {
           ),
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           children: [
-            SizedBox(
-              height: 150,
+            IntrinsicHeight(
               child: Row(
                 children: [
                   // items
                   Expanded(
                     flex: 3,
-                    child: ListView(
-                      children: order.items.map((e) {
-                        return _OrderItem(
-                          utilsServices: utilsServices,
-                          orderItem: e,
-                        );
-                      }).toList(),
+                    child: SizedBox(
+                      height: 150,
+                      child: ListView(
+                        children: order.items.map((e) {
+                          return _OrderItem(
+                            utilsServices: utilsServices,
+                            orderItem: e,
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                   // divisão
