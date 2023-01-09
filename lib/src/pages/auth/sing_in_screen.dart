@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/pages/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/pages/common_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/pages/common_widgets/custom_text_field.dart';
 import 'package:greengrocer/src/pages_routes/app_routes.dart';
@@ -83,7 +84,6 @@ class SignInScreen extends StatelessWidget {
                             return "Digite seu email";
                           }
                           if (!value.isEmail) return "Digite um email valido";
-
                           return null;
                         },
                       ),
@@ -100,41 +100,43 @@ class SignInScreen extends StatelessWidget {
                           if (value.length < 7) {
                             return "Digite uma senha com pelo menos 7 carateres";
                           }
-
                           return null;
                         },
                       ),
                       // Botão de entrar
                       SizedBox(
                         height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                          ),
-                          onPressed: () {
-                            // Navigator.of(context).pushReplacement(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const BaseScreen(),
-                            //   ),
-                            // );
-                            if (_formKey.currentState!.validate()) {
-                              String email = emailController.text;
-                              String password = passwordController.text;
-
-                              print("$email $password");
-                            } else {
-                              print("falhou");
-                            }
-                            // Get.toNamed(PagesRoutes.baseRoute);
+                        child: GetX<AuthController>(
+                          builder: (authCtrl) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                              ),
+                              onPressed: authCtrl.isLoading.value
+                                  ? null
+                                  : () {
+                                      FocusScope.of(context).unfocus();
+                                      if (_formKey.currentState!.validate()) {
+                                        String email = emailController.text;
+                                        String password =
+                                            passwordController.text;
+                                        authCtrl.signIn(
+                                            email: email, password: password);
+                                      }
+                                      // Get.toNamed(PagesRoutes.baseRoute);
+                                    },
+                              child: authCtrl.isLoading.value
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      'Entrar',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                            );
                           },
-                          child: const Text(
-                            'Entrar',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
                         ),
                       ),
                       // botão esqueceu senha
@@ -187,11 +189,6 @@ class SignInScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => SignUpScreen(),
-                            //   ),
-                            // );
                             Get.toNamed(PagesRoutes.signUpRoute);
                           },
                           child: const Text(
