@@ -13,6 +13,13 @@ class AuthController extends GetxController {
   final utilServices = UtilsServices();
   UserModel user = UserModel();
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    validateToken();
+  }
+
   Future<void> signIn({required String email, required String password}) async {
     isLoading.value = true;
 
