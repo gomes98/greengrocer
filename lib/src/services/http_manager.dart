@@ -34,10 +34,8 @@ class HttpManager {
         ),
         data: body,
       );
-      print(response.data);
       return response.data;
     } on DioError catch (error) {
-      print("DioError ${error.response?.data ?? {}}");
       return error.response?.data ?? {};
     } catch (e) {
       return {};
