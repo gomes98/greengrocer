@@ -88,7 +88,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: SingleChildScrollView(
                             child: Text(
-                              widget.item.description * 20,
+                              widget.item.description,
                               style: const TextStyle(
                                 height: 1.5,
                               ),
