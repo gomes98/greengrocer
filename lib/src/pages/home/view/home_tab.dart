@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/pages/common_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/pages/common_widgets/custom_shimmer.dart';
-import 'package:greengrocer/src/pages/home/components/category_tile.dart';
 import 'package:greengrocer/src/config/app_data.dart' as appdata;
-import 'package:greengrocer/src/pages/home/components/item_tite.dart';
 import 'package:greengrocer/src/pages/home/controller/home_controller.dart';
+import 'package:greengrocer/src/pages/home/view/components/category_tile.dart';
+import 'package:greengrocer/src/pages/home/view/components/item_tite.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
