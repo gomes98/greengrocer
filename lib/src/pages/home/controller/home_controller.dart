@@ -11,16 +11,21 @@ class HomeController extends GetxController {
   bool isLoading = false;
 
   List<CategoryModel> allCategories = [];
+  CategoryModel? currentCategory;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getAllCategories();
   }
 
   void setLoading(bool value) {
     isLoading = value;
+    update();
+  }
+
+  void selectCategory(CategoryModel c) {
+    currentCategory = c;
     update();
   }
 
@@ -34,7 +39,8 @@ class HomeController extends GetxController {
 
     homeResult.when(success: (data) {
       allCategories.addAll(data);
-      print(data);
+      if (allCategories.isEmpty) return;
+      selectCategory(allCategories.first);
     }, error: (message) {
       utilsServices.showToast(message: message, isError: true);
     });
