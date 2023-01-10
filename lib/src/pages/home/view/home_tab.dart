@@ -35,7 +35,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     // pegando o binding
-    Get.find<HomeController>().printExample();
+    // Get.find<HomeController>().printExample();
     // funão para simular a inicialização
     Future.delayed(
       const Duration(seconds: 3),
