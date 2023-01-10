@@ -7,6 +7,7 @@ import 'package:greengrocer/src/pages/auth/view/components/forgot_password_dialo
 import 'package:greengrocer/src/pages/common_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/pages/common_widgets/custom_text_field.dart';
 import 'package:greengrocer/src/pages_routes/app_routes.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 import 'package:greengrocer/src/services/validators.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class SignInScreen extends StatelessWidget {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final utilsServices = UtilsServices();
 
   @override
   Widget build(BuildContext context) {
@@ -131,13 +133,21 @@ class SignInScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return ForgotPasswordDialog(
-                                      email: emailController.text);
-                                });
+                          onPressed: () async {
+                            final bool? result = await showDialog(
+                              context: context,
+                              builder: (_) {
+                                return ForgotPasswordDialog(
+                                  email: emailController.text,
+                                );
+                              },
+                            );
+                            if (result ?? false) {
+                              utilsServices.showToast(
+                                message:
+                                    "Um link de recuperação foi enviado para seu email",
+                              );
+                            }
                           },
                           child: Text(
                             'Esqueceu a senha?',
