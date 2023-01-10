@@ -28,7 +28,7 @@ class AuthRepository {
 
   Future<AuthResult> signUp(UserModel user) async {
     final result = await _httpManager.restRequest(
-      url: EndPoints.signin,
+      url: EndPoints.signup,
       method: HttpMethods.post,
       body: user.toMap(),
     );

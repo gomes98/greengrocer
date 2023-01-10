@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   String? name;
   String? email;
@@ -43,6 +44,6 @@ class UserModel {
 
   @override
   String toString() {
-    return "$name | $cpf";
+    return 'UserModel(name: $name, email: $email, phone: $phone, cpf: $cpf, password: $password, id: $id, token: $token)';
   }
 }
