@@ -40,7 +40,9 @@ String? phoneValidator(String? value) {
     return "Digite um celular";
   }
 
-  if (!value.isPhoneNumber) return "Digite um numero válido";
+  if (value.length < 14 || !value.isPhoneNumber) {
+    return "Digite um numero válido";
+  }
 
   return null;
 }
