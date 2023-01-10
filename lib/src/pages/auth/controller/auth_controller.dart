@@ -43,6 +43,9 @@ class AuthController extends GetxController {
   }
 
   Future<void> validateToken() async {
+    await Future.delayed(const Duration(seconds: 2));
+    Get.offAllNamed(PagesRoutes.signInRoute);
+    return;
     String? token = await utilServices.getLocalData(key: StorageKeys.token);
 
     if (token == null) {
