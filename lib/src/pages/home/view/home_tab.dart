@@ -26,12 +26,7 @@ class _HomeTabState extends State<HomeTab> {
     runAddToCartAnimation(gkImage);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    // pegando o binding
-    // Get.find<HomeController>().printExample();
-  }
+  final controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +81,10 @@ class _HomeTabState extends State<HomeTab> {
                 vertical: 10,
               ),
               child: TextField(
+                onChanged: ((value) {
+                  // print(value);
+                  controller.searchTitle.value = value;
+                }),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
@@ -172,6 +171,7 @@ class _HomeTabState extends State<HomeTab> {
                           // paginação infinita
                           if ((index + 1) == controller.allProducts.length &&
                               !controller.isLastPage) {
+                            // carrega mais produtos
                             controller.loadMoreProducts();
                           }
                           return ItemTile(
