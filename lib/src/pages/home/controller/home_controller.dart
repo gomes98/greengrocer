@@ -76,6 +76,38 @@ class HomeController extends GetxController {
     });
   }
 
+  void filterByTitle() {
+    // removendo os dados das categorias
+    for (var category in allCategories) {
+      category.items.clear();
+      category.pagination = 0;
+    }
+
+    // se estiver vazio
+    if (searchTitle.value.isEmpty) {
+      allCategories.removeAt(0);
+    } else {
+      CategoryModel? c = allCategories.firstWhereOrNull((cat) => cat.id == '');
+
+      if (c == null) {
+        final allCategory = CategoryModel(
+          title: "Todos",
+          id: "",
+          items: [],
+          pagination: 0,
+        );
+
+        allCategories.insert(0, allCategory);
+      } else {
+        c.items.clear();
+        c.pagination = 0;
+      }
+    }
+
+    currentCategory = allCategories.first;
+    update();
+  }
+
   void loadMoreProducts() {
     currentCategory!.pagination++;
 
