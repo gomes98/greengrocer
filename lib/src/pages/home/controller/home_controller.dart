@@ -34,7 +34,8 @@ class HomeController extends GetxController {
       searchTitle,
       (_) {
         // print("aham ${searchTitle.value}");
-        update();
+        filterByTitle();
+        // update();
       },
       time: const Duration(milliseconds: 600),
     );
@@ -106,6 +107,7 @@ class HomeController extends GetxController {
 
     currentCategory = allCategories.first;
     update();
+    getAllProducts();
   }
 
   void loadMoreProducts() {
@@ -120,10 +122,21 @@ class HomeController extends GetxController {
     }
 
     Map<String, dynamic> body = {
-      "page": currentCategory!.pagination,
-      "categoryId": currentCategory!.id,
-      "itemsPerPage": itemsPerPage
+      'page': currentCategory!.pagination,
+      'categoryId': currentCategory!.id,
+      'itemsPerPage': itemsPerPage
     };
+
+    // aqui pega a pesquisa
+    if (searchTitle.value.isNotEmpty) {
+      body['title'] = searchTitle.value;
+
+      if (currentCategory!.id == '') {
+        body.remove('categoryId');
+      }
+    }
+
+    print(body);
 
     HomeResult<ItemModel> homeResult =
         await homeRepository.getAllProducts(body);

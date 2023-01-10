@@ -87,7 +87,6 @@ class _HomeTabState extends State<HomeTab> {
                   child: TextField(
                     controller: searchController,
                     onChanged: ((value) {
-                      // print(value);
                       controller.searchTitle.value = value;
                     }),
                     decoration: InputDecoration(
@@ -178,29 +177,44 @@ class _HomeTabState extends State<HomeTab> {
             GetBuilder<HomeController>(builder: (controller) {
               return Expanded(
                 child: !controller.isProductLoading
-                    ? GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 9 / 11.5,
+                    ? Visibility(
+                        visible: (controller.currentCategory?.items ?? [])
+                            .isNotEmpty,
+                        child: GridView.builder(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                          physics: const BouncingScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 9 / 11.5,
+                          ),
+                          itemCount: controller.allProducts.length,
+                          itemBuilder: (_, index) {
+                            // paginação infinita
+                            if ((index + 1) == controller.allProducts.length &&
+                                !controller.isLastPage) {
+                              // carrega mais produtos
+                              controller.loadMoreProducts();
+                            }
+                            return ItemTile(
+                              item: controller.allProducts[index],
+                              cartAnimationMethod: itemSelectedCardAnimations,
+                            );
+                          },
                         ),
-                        itemCount: controller.allProducts.length,
-                        itemBuilder: (_, index) {
-                          // paginação infinita
-                          if ((index + 1) == controller.allProducts.length &&
-                              !controller.isLastPage) {
-                            // carrega mais produtos
-                            controller.loadMoreProducts();
-                          }
-                          return ItemTile(
-                            item: controller.allProducts[index],
-                            cartAnimationMethod: itemSelectedCardAnimations,
-                          );
-                        },
+                        replacement: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search_off,
+                              size: 40,
+                              color: CustomColors.customSwatchColor,
+                            ),
+                            const Text("Não há itens para apresentar"),
+                          ],
+                        ),
                       )
                     : GridView.count(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
