@@ -30,12 +30,33 @@ class AuthController extends GetxController {
 
     result.when(success: (user) {
       this.user = user;
-      // valvo o token
+      // salvo o token
       utilServices.saveLocalData(
         key: StorageKeys.token,
         value: this.user.token!,
       );
-      // limpa todas as telas da pulha
+      // limpa todas as telas da pilha
+      Get.offAllNamed(PagesRoutes.baseRoute);
+    }, error: (message) {
+      utilServices.showToast(message: message, isError: true);
+    });
+  }
+
+  Future<void> signUp() async {
+    isLoading.value = true;
+
+    AuthResult result = await authRepository.signUp(user);
+
+    isLoading.value = false;
+
+    result.when(success: (user) {
+      this.user = user;
+      // salvo o token
+      utilServices.saveLocalData(
+        key: StorageKeys.token,
+        value: this.user.token!,
+      );
+      // limpa todas as telas da pilha
       Get.offAllNamed(PagesRoutes.baseRoute);
     }, error: (message) {
       utilServices.showToast(message: message, isError: true);
@@ -61,7 +82,7 @@ class AuthController extends GetxController {
 
     result.when(success: (user) {
       this.user = user;
-      // limpa todas as telas da pulha
+      // limpa todas as telas da pilha
       Get.offAllNamed(PagesRoutes.baseRoute);
     }, error: (message) {
       signOut();

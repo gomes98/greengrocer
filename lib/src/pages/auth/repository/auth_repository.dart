@@ -14,12 +14,7 @@ class AuthRepository {
       body: {"email": email, "password": password},
     );
 
-    if (result['result'] != null) {
-      final user = UserModel.fromMap(result['result']);
-      return AuthResult.success(user);
-    } else {
-      return AuthResult.error(authErrorString(result['error']));
-    }
+    return handleUserOrError(result);
   }
 
   Future<AuthResult> validateToken({required String token}) async {
@@ -28,6 +23,20 @@ class AuthRepository {
         method: HttpMethods.post,
         headers: {'X-Parse-Session-Token': token});
 
+    return handleUserOrError(result);
+  }
+
+  Future<AuthResult> signUp(UserModel user) async {
+    final result = await _httpManager.restRequest(
+      url: EndPoints.signin,
+      method: HttpMethods.post,
+      body: user.toMap(),
+    );
+
+    return handleUserOrError(result);
+  }
+
+  AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
     if (result['result'] != null) {
       final user = UserModel.fromMap(result['result']);
       return AuthResult.success(user);
