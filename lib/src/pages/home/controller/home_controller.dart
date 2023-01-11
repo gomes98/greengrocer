@@ -136,8 +136,6 @@ class HomeController extends GetxController {
       }
     }
 
-    print(body);
-
     HomeResult<ItemModel> homeResult =
         await homeRepository.getAllProducts(body);
 
