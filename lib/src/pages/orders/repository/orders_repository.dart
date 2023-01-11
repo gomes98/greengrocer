@@ -3,10 +3,10 @@ import 'package:greengrocer/src/models/order_model.dart';
 import 'package:greengrocer/src/pages/orders/order_result/orders_result.dart';
 import 'package:greengrocer/src/services/http_manager.dart';
 
-class OrderRepository {
+class OrdersRepository {
   final _httpManager = HttpManager();
 
-  Future<OrdersResult<List<OrderModel>>> checkoutCart({
+  Future<OrdersResult<List<OrderModel>>> getAllOrders({
     required String token,
     required String userId,
   }) async {
