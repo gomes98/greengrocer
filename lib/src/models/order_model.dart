@@ -27,8 +27,8 @@ class OrderModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'due': createdOrderTime?.millisecondsSinceEpoch,
-      'overdueDateTime': overdueDateTime.millisecondsSinceEpoch,
+      'createdAt': createdOrderTime?.millisecondsSinceEpoch,
+      'due': overdueDateTime.millisecondsSinceEpoch,
       'items': items.map((x) => x.toMap()).toList(),
       'status': status,
       'copiaecola': copyAndPaste,
@@ -40,9 +40,8 @@ class OrderModel {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'] as String,
-      createdOrderTime: map['createdOrderTime'] != null
-          ? DateTime.parse(map['createdOrderTime'])
-          : null,
+      createdOrderTime:
+          map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
       overdueDateTime: DateTime.parse(map['due']),
       items: map['items'] != null
           ? List<CartItemModel>.from(
