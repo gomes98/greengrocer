@@ -52,4 +52,23 @@ class CartRepository {
       return CartResult.error("ocorreu um erro ao adicionar item do carrinho");
     }
   }
+
+  Future<bool> changeItemQuantity({
+    required String token,
+    required String cartItemId,
+    required int quantity,
+  }) async {
+    final result = await _httpManager.restRequest(
+        url: EndPoints.changeItemQuantity,
+        method: HttpMethods.post,
+        headers: {
+          'X-Parse-Session-Token': token
+        },
+        body: {
+          'cartItemId': cartItemId,
+          'quantity': quantity,
+        });
+
+    return result.isEmpty;
+  }
 }
