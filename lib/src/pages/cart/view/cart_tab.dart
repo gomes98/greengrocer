@@ -17,6 +17,8 @@ class CartTab extends StatefulWidget {
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
 
+  final cartController = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,17 +111,7 @@ class _CartTabState extends State<CartTab> {
                     onPressed: (() async {
                       bool? result = await showOrderConfirmation();
                       if (result ?? false) {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return PaymentDialog(
-                              orderModel: app_data.orders.first,
-                            );
-                          },
-                        );
-                      } else {
-                        utilsServices.showToast(
-                            message: "Pedido não confirmado", isError: true);
+                        cartController.checkout();
                       }
                     }),
                     child: const Text(
