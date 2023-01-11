@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/models/item_model.dart';
+import 'package:greengrocer/src/pages/base/controller/navigation_controller.dart';
 import 'package:greengrocer/src/pages/common_widgets/quantity_widget.dart';
 import 'package:greengrocer/src/services/utils_services.dart';
 
@@ -15,6 +17,7 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   final UtilsServices utilsServices = UtilsServices();
   int cartItemQuantity = 1;
+  final navigationController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +104,13 @@ class _ProductScreenState extends State<ProductScreen> {
                       SizedBox(
                         height: 50,
                         child: ElevatedButton.icon(
-                          onPressed: (() {}),
+                          onPressed: (() {
+                            // fechar a tela
+                            Get.back();
+                            // enviando para tela carrinho
+                            navigationController
+                                .navigatePageView(NavigationTabs.cart);
+                          }),
                           label: const Text('Add no Carrinho'),
                           icon: const Icon(Icons.shopping_cart_outlined),
                           style: ElevatedButton.styleFrom(
