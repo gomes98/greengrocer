@@ -17,22 +17,6 @@ class CartTab extends StatefulWidget {
 class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
 
-  // void removeItemFromCart(CartItemModel cartItem) {
-  //   setState(() {
-  //     app_data.cartItems.remove(cartItem);
-  //     utilsServices.showToast(
-  //         message: "${cartItem.item.itemName} removido(a) do carrinho");
-  //   });
-  // }
-
-  double cartTotalPrice() {
-    double total = 0;
-    for (var item in app_data.cartItems) {
-      total += item.totalPrice();
-    }
-    return total;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,15 +28,29 @@ class _CartTabState extends State<CartTab> {
           // lista de itens
           Expanded(child: GetBuilder<CartController>(
             builder: (controller) {
-              return ListView.builder(
-                itemCount: controller.cartItems.length,
-                itemBuilder: (_, index) {
-                  return CartTile(
-                    cartItem: controller.cartItems[index],
-                    // remove: removeItemFromCart,
-                  );
-                },
-              );
+              if (controller.cartItems.isEmpty) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.remove_shopping_cart,
+                      size: 40,
+                      color: CustomColors.customSwatchColor,
+                    ),
+                    const Text("Não há itens no carrinho"),
+                  ],
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: controller.cartItems.length,
+                  itemBuilder: (_, index) {
+                    return CartTile(
+                      cartItem: controller.cartItems[index],
+                      // remove: removeItemFromCart,
+                    );
+                  },
+                );
+              }
             },
           )),
 
