@@ -12,5 +12,5 @@ abstract class EndPoints {
   static const String changeItemQuantity = "$baseUrl/modify-item-quantity";
   static const String checkout = "$baseUrl/checkout";
   static const String getAllOrders = "$baseUrl/get-orders";
-  // static const String checkout = "$baseUrl/get-order-items";
+  static const String getOrderItems = "$baseUrl/get-order-items";
 }

@@ -13,6 +13,8 @@ class OrderModel {
   double total;
   String qrcodeImage;
 
+  bool get isOverDue => overdueDateTime.isBefore(DateTime.now());
+
   OrderModel({
     required this.id,
     this.createdOrderTime,
