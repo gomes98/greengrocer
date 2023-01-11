@@ -108,7 +108,8 @@ class _CartTabState extends State<CartTab> {
                             ),
                           ),
                         ),
-                        onPressed: controller.isCheckoutLoading
+                        onPressed: (controller.isCheckoutLoading ||
+                                controller.cartItems.isEmpty)
                             ? null
                             : () async {
                                 bool? result = await showOrderConfirmation();
