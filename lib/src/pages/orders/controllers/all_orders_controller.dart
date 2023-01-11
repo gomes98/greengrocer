@@ -27,7 +27,10 @@ class AllOrdersController extends GetxController {
       userId: authController.user.id!,
     );
     result.when(success: (orders) {
-      allOrders = orders;
+      allOrders = orders
+        ..sort(
+          (a, b) => b.createdOrderTime!.compareTo(a.createdOrderTime!),
+        );
       update();
     }, error: (message) {
       utilsServices.showToast(
