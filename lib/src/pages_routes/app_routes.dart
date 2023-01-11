@@ -5,6 +5,7 @@ import 'package:greengrocer/src/pages/base/base_screen.dart';
 import 'package:greengrocer/src/pages/base/binding/navigation_binding.dart';
 import 'package:greengrocer/src/pages/cart/binding/cart_binding.dart';
 import 'package:greengrocer/src/pages/home/binding/home_binding.dart';
+import 'package:greengrocer/src/pages/product/product_screen.dart';
 import 'package:greengrocer/src/pages/splash/splash_screen.dart';
 
 abstract class AppPages {
@@ -29,6 +30,10 @@ abstract class AppPages {
           HomeBinding(),
           CartBindind(),
         ]),
+    GetPage(
+      name: PagesRoutes.productToute,
+      page: () => ProductScreen(),
+    ),
   ];
 }
 
@@ -37,4 +42,5 @@ abstract class PagesRoutes {
   static const String signUpRoute = '/signup';
   static const String splashRoute = '/splash';
   static const String baseRoute = '/';
+  static const String productToute = '/product';
 }
