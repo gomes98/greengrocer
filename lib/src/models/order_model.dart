@@ -40,20 +40,21 @@ class OrderModel {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'] as String,
-      createdOrderTime: map['due'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['createdOrderTime'] as int)
+      createdOrderTime: map['createdOrderTime'] != null
+          ? DateTime.parse(map['createdOrderTime'])
           : null,
-      overdueDateTime:
-          DateTime.fromMillisecondsSinceEpoch(map['overdueDateTime'] as int),
-      items: List<CartItemModel>.from(
-        (map['items'] as List<int>).map<CartItemModel>(
-          (x) => CartItemModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      overdueDateTime: DateTime.parse(map['due']),
+      items: map['items'] != null
+          ? List<CartItemModel>.from(
+              (map['items'] as List<int>).map<CartItemModel>(
+                (x) => CartItemModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
       status: map['status'] as String,
       copyAndPaste: map['copiaecola'] as String,
       total: map['total'] as double,
-      qrcodeImage: map['qrcodeImage'] as String,
+      qrcodeImage: map['qrCodeImage'] as String,
     );
   }
 
