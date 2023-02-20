@@ -8,6 +8,7 @@ import 'package:greengrocer/src/services/utils_services.dart';
 
 class AuthController extends GetxController {
   RxBool isLoading = false.obs;
+  RxString userName = "".obs;
 
   final authRepository = AuthRepository();
   final utilServices = UtilsServices();
@@ -18,6 +19,12 @@ class AuthController extends GetxController {
     super.onInit();
 
     validateToken();
+    getUserName();
+  }
+
+  Future<void> getUserName() async {
+    userName.value =
+        await utilServices.getLocalData(key: StorageKeys.userName) ?? "";
   }
 
   Future<void> signIn({required String email, required String password}) async {
@@ -34,6 +41,10 @@ class AuthController extends GetxController {
       utilServices.saveLocalData(
         key: StorageKeys.token,
         value: this.user.token!,
+      );
+      utilServices.saveLocalData(
+        key: StorageKeys.userName,
+        value: email,
       );
       // limpa todas as telas da pilha
       Get.offAllNamed(PagesRoutes.baseRoute);

@@ -79,11 +79,16 @@ class SignInScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // campo de email
-                      CustomTextField(
-                        controller: emailController,
-                        icon: Icons.email,
-                        label: 'Email',
-                        validator: emailValidator,
+                      GetBuilder<AuthController>(
+                        builder: (controller) {
+                          emailController.text = controller.userName.value;
+                          return CustomTextField(
+                            controller: emailController,
+                            icon: Icons.email,
+                            label: 'Email',
+                            validator: emailValidator,
+                          );
+                        },
                       ),
                       // campo de senha
                       CustomTextField(
